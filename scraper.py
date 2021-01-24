@@ -1,7 +1,13 @@
+# note for readers:
+# double hashtags "##" denote a comment
+# single hastags "#" denote code not to run
+
+
 import requests
 # module for api GET requests
 import json
 # module for handling JSON data from APIs
+from datetime import date
 
 # current mn covid data (all JSON data from the state)
 mn_current = requests.get(
@@ -10,8 +16,9 @@ mn_current = requests.get(
 # mn_historic = requests.get(
 #    "https://api.covidtracking.com/v1/states/mn/daily.json")
 
+##
 mn_current_dict = json.loads(mn_current.text)
-print(mn_current_dict["date"])
+date_now = (mn_current_dict["date"])
 
 
 def jprint(obj):
@@ -21,6 +28,12 @@ def jprint(obj):
 
 
 #print('current data')
-# jprint(mn_current.json())
+jprint(mn_current.json())
 #print('historical data')
 # jprint(mn_historic.json())
+
+dt = str(date.today())
+today = int(dt.replace("-", ""))
+
+if date_now >= today:
+    print("works")
