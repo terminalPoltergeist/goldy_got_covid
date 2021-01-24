@@ -39,13 +39,3 @@ today = int(dt.replace("-", ""))
 # calculates yesterday's date and formats it as MM/DD/YY
 yesterday = date.today() - timedelta(days=1)
 yesterday = yesterday.strftime('%m/%d/%y')
-
-
-message = "Data last updated: "
-
-if date_now == today:
-    message = message + str(today)
-    print(message)
-elif date_now + 1 == today:
-    message = message + yesterday
-    print(message)
