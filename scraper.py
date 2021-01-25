@@ -73,7 +73,6 @@ data['ucases_total'] = U_cases_total
 data['total_percent'] = percent_total
 data['week_percent'] = percent_week
 
-print(data)
 
 with open('data.txt', 'w') as outfile:
     json.dump(data, outfile)
