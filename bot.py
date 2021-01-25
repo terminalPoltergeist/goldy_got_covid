@@ -1,1 +1,4 @@
-## empty file, will be used to make the Twitter bot module when the scraper module is complete...
+import tweepy
+
+auth = tweepy.OAuthHandler("CONSUMER_KEY", "CONSUMER_SECRET")
+auth.set_access_token("ACCESS_TOKEN", "ACCESS_TOKEN_SECRET")

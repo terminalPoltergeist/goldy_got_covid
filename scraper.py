@@ -2,7 +2,6 @@
 # single hashtags "#" denote a comment
 # hastag slash "#/" denote code not to run
 
-
 import requests
 # module for api GET requests
 import json
@@ -20,6 +19,10 @@ mn_current = requests.get(
 mn_current_dict = json.loads(mn_current.text)
 # gets the current date object from the dictionary
 date_now = (mn_current_dict["date"])
+cases_today = (mn_current_dict["positiveIncrease"])
+cases_total = (mn_current_dict["positive"])
+deaths_today = (mn_current_dict["deathIncrease"])
+deaths_total = (mn_current_dict["death"])
 
 
 def jprint(obj):
