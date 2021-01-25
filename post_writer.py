@@ -1,10 +1,10 @@
 from scraper import today, yesterday, date_now
 
-message = "Data last updated: "
+message = "(Data current as of "
 
 if date_now == today:
-    message = message + str(today)
+    message = message + "today)"
     print(message)
 elif date_now + 1 == today:
-    message = message + yesterday
+    message = message + "yesterday)"
     print(message)
