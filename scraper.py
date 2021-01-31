@@ -11,6 +11,11 @@ from datetime import date, timedelta
 from bs4 import BeautifulSoup
 # web scraper library
 
+
+#
+# --- Minnesota Covid data api access ---
+
+
 # current mn covid data (all JSON data from the state)
 mn_current = requests.get(
     "https://api.covidtracking.com/v1/states/mn/current.json?date")
@@ -18,33 +23,46 @@ mn_current = requests.get(
 #/ mn_historic = requests.get(
 #/   "https://api.covidtracking.com/v1/states/mn/daily.json")
 
+
 # parses JSON response as a Python dictionary
 mn_current_dict = json.loads(mn_current.text)
 # gets the current date object from the dictionary
-date_now = (mn_current_dict["date"])
+date_now = str(mn_current_dict["date"])
 cases_today = (mn_current_dict["positiveIncrease"])
 cases_total = (mn_current_dict["positive"])
 deaths_today = (mn_current_dict["deathIncrease"])
 deaths_total = (mn_current_dict["death"])
+date_now = (date_now[2:])
 
 
-def jprint(obj):
-    # create a formatted string of the Python JSON object
-    text = json.dumps(obj, sort_keys=True, indent=4)
-    print(text)
+#/ def jprint(obj):
+# create a formatted string of the Python JSON object
+#/    text = json.dumps(obj, sort_keys=True, indent=4)
+#/    print(text)
+
 
 # prints JSON formatted data
 #/ jprint(mn_current.json())
 #/ jprint(mn_historic.json())
 
 
+#
+# --- metadata setup ---
+
+
 # gets today's date in form YYYY-MM-DD, conversts to str
-dt = str(date.today())
+dt = date.today()
+today = str(dt.strftime('%y%m%d'))
 # removes dashes, formats as YYYYMMDD, converts back to int
-today = int(dt.replace("-", ""))
+today = today.replace("-", "")
 # calculates yesterday's date and formats it as MM/DD/YY
 yesterday = date.today() - timedelta(days=1)
-yesterday = yesterday.strftime('%m/%d/%y')
+yesterday = yesterday.strftime('%y%m%d')
+#/ print(today, yesterday)
+
+
+#
+# --- UMN covid data scraping ---
 
 URL = "https://safe-campus.umn.edu/return-campus/covid-19-dashboard"
 dashboard = requests.get(URL).text
@@ -62,7 +80,19 @@ percentages = soup.findAll(
 percent_total = float(percentages[0].string)
 percent_week = float(percentages[1].string)
 
+# gets MAG step
+URL = "https://housing.umn.edu"
+page = requests.get(URL).text
+soup = BeautifulSoup(page, "html.parser")
+#/ html = soup.find(class_="text")
+step = soup.find(class_='text')
+step_text = step.find('h2').text
 
+
+#
+# --- Data formatting ---
+
+# makes a dictionary of the data pulled so it can be used in JSON
 data = {}
 data['mn_cases_today'] = cases_today
 data['mn_cases_total'] = cases_total
@@ -72,7 +102,9 @@ data['ucases_week'] = U_cases_week
 data['ucases_total'] = U_cases_total
 data['total_percent'] = percent_total
 data['week_percent'] = percent_week
+data['step'] = step_text
+data['prompt1'] = "Stay Home - Doors are monitored after 10 pm."
 
 
-#/ with open('data.txt', 'w') as outfile:
-#/    json.dump(data, outfile)
+with open('data.txt', 'w') as outfile:
+    json.dump(data, outfile, indent=4)
