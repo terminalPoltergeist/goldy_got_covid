@@ -68,7 +68,7 @@ URL = "https://safe-campus.umn.edu/return-campus/covid-19-dashboard"
 dashboard = requests.get(URL).text
 #/ data = html.fromstring(dashboard.content)
 #/ num = data.xpath(
-#/    '//*[@id="block-folwell-content"]/article/div/div[1]/div/div[3]/div/div[2]/div/div/div[2]/div[2]/div[2]/div[2]/div[1]')
+#/      '//*[@id="block-folwell-content"]/article/div/div[1]/div/div[3]/div/div[2]/div/div/div[2]/div[2]/div[2]/div[2]/div[1]')
 soup = BeautifulSoup(dashboard, "lxml")
 cases = soup.findAll(
     "div", class_="field field--name-field-number-of-cases field--type-float field--label-hidden field__item")
@@ -106,5 +106,6 @@ data['step'] = step_text
 data['prompt1'] = "Stay Home - Doors are monitored after 10 pm."
 
 
+#writes data to .txt file for input into post_writer.py
 with open('data.txt', 'w') as outfile:
     json.dump(data, outfile, indent=4)

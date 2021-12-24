@@ -31,6 +31,7 @@ elif time >= 13:
     status = post_writer.night_POST
     update = api.update_status(status)
 
+print(update)
 
 # setting the id to the status id number ex. 1354266511159029762
 #/id = update.id
@@ -38,5 +39,5 @@ elif time >= 13:
 
 # creating an api object to pull tweet data as JSON
 #/api_json = tweepy.API(auth, parser=tweepy.parsers.JSONParser(), wait_on_rate_limit=True,
- #/                     wait_on_rate_limit_notify=True)
+#/                     wait_on_rate_limit_notify=True)
 #/post = api_json.get_status(id)

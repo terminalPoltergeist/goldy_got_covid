@@ -20,14 +20,17 @@ def morning_post():
     if date_now == today:
         message = message + "today)"
         #/ print(message)
-    elif date_now + 1 == today:
+    elif int(date_now) + 1 == int(today):
         message = message + "yesterday)"
         #/ print(message)
+    else:
+        message = ""
     morning_POST = "Minnesota COVID Data:\n\nNew Cases: " + str(data["mn_cases_today"]) + "\nTotal Cases: " + str(
         data["mn_cases_total"]) + "\nNew Deaths: " + str(data["mn_deaths_today"]) + "\nTotal Deaths: " + str(data["mn_deaths_total"]) + "\n" + str(message) + ""
 
 
 #/ will hold the formatted status update. called in bot.py
 # status =
+
 
 #/ print(data)
